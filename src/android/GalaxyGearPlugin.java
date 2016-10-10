@@ -1,16 +1,4 @@
-package net.trentgardner.cordova.galaxygear;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.cordova.CordovaArgs;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.overmob.cordova.galaxygear;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -22,8 +10,17 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
-import net.trentgardner.cordova.galaxygear.GearMessageApi;
-import net.trentgardner.cordova.galaxygear.GearMessageListener;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaArgs;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalaxyGearPlugin extends CordovaPlugin {
 	private final String TAG = GalaxyGearPlugin.class.getSimpleName();
@@ -32,8 +29,8 @@ public class GalaxyGearPlugin extends CordovaPlugin {
 	private final String ACTION_ONDATARECEIVED = "onDataReceived";
 	private final String ACTION_ONERROR = "onError";
 	private final String ACTION_SENDDATA = "sendData";
-	private final String PACKAGE_PREFERENCE = "GearProviderPackage";
-	private final String PROVIDER_CLASS = "net.trentgardner.cordova.galaxygear.GearProviderService";
+	private final String PACKAGE_PREFERENCE = "ProviderPackage";
+	private final String PROVIDER_CLASS = "com.overmob.cordova.galaxygear.ProviderService";
 
 	private GearMessageApi api = null;
 	private Intent serviceIntent = null;
@@ -69,7 +66,7 @@ public class GalaxyGearPlugin extends CordovaPlugin {
 		@Override
 		public void onDataReceived(int connectionId, String data)
 				throws RemoteException {
-			Log.d(TAG, "messageListener.onDataReceived");
+			Log.d(TAG, "messageListener.onDataReceived: "+data);
 
 			GearConnection connection = connections.get(connectionId);
 			if (connection == null)
@@ -235,14 +232,16 @@ public class GalaxyGearPlugin extends CordovaPlugin {
 
 	private void onDataReceived(final CordovaArgs args,
 			final CallbackContext callbackContext) throws JSONException {
-		Log.d(TAG, "onDataReceived");
-
 		int connectionId = args.getInt(0);
+		Log.d(TAG, "onDataReceived: "+connectionId);
+
+
 		GearConnection connection = connections.get(connectionId);
 		if (connection != null) {
 			connection.addDataListener(callbackContext);
 		} else {
 			callbackContext.error("Invalid connection handle");
+			Log.d(TAG, "onDataReceived error");
 		}
 	}
 

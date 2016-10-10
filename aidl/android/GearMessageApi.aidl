@@ -1,6 +1,6 @@
-package net.trentgardner.cordova.galaxygear;
+package com.overmob.cordova.galaxygear;
 
-import net.trentgardner.cordova.galaxygear.GearMessageListener;
+import com.overmob.cordova.galaxygear.GearMessageListener;
 
 interface GearMessageApi {
 	void sendData(int connectionId, String data);

@@ -2,19 +2,19 @@
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-galaxygear"
-        version="0.0.3">
+        version="0.0.1">
 
     <name>Galaxy Gear</name>
 
     <license>Apache 2.0</license>
     
-    <description>Allows communication with Samsung Gear 2 Series Tizen applications and Cordova applications.</description>
+    <description>Allows communication with Samsung Gear S2 Tizen applications and Cordova applications.</description>
 
-    <author>Trent Gardner</author>
+    <author>Overmob Srl</author>
 
     <license>Apache 2.0</license>
 
-    <keywords>GalaxyGear, Android, Samsung, Gear, Watch, Wearble</keywords>
+    <keywords>GalaxyGear, Android, Samsung, Gear, Watch, Wearble, Gear S2</keywords>
 
     <repo>https://github.com/tgardner/cordova-galaxygear.git</repo>
 
@@ -32,37 +32,39 @@
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="galaxygear" >
-                <param name="android-package" value="net.trentgardner.cordova.galaxygear.GalaxyGearPlugin"/>
+                <param name="android-package" value="com.overmob.cordova.galaxygear.GalaxyGearPlugin"/>
             </feature>
         </config-file>
         
         <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
             <uses-permission android:name="com.samsung.accessory.permission.ACCESSORY_FRAMEWORK" />
             <uses-permission android:name="com.samsung.wmanager.APP" />
             <uses-permission android:name="com.samsung.wmanager.ENABLE_NOTIFICATION" /> 
             <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" /> 
-            <uses-permission android:name="com.samsung.WATCH_APP_TYPE.Integrated"/>
+            <uses-permission android:name="com.samsung.WATCH_APP_TYPE.Companion" />
         </config-file>
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="net.trentgardner.cordova.galaxygear.GearProviderService" 
+
+            <service android:name="com.overmob.cordova.galaxygear.ProviderService" 
                      android:process=":remote">
                 <intent-filter >
-                    <action android:name="net.trentgardner.cordova.galaxygear.GearProviderService"/>
+                    <action android:name="com.overmob.cordova.galaxygear.ProviderService"/>
                 </intent-filter>
             </service>
 
-            <receiver android:name="com.samsung.android.sdk.accessory.ServiceConnectionIndicationBroadcastReceiver" >
-                <intent-filter>
-                    <action android:name="android.accessory.service.action.ACCESSORY_SERVICE_CONNECTION_IND" />
-                </intent-filter>
-            </receiver>
-            
             <receiver android:name="com.samsung.android.sdk.accessory.RegisterUponInstallReceiver" >
                 <intent-filter>
-                    <action android:name="android.accessory.device.action.REGISTER_AFTER_INSTALL" />
+                    <action android:name="com.samsung.accessory.action.REGISTER_AGENT" />
+                </intent-filter>
+            </receiver>
+        
+            <receiver android:name="com.samsung.android.sdk.accessory.ServiceConnectionIndicationBroadcastReceiver" >
+                <intent-filter>
+                    <action android:name="com.samsung.accessory.action.SERVICE_CONNECTION_REQUESTED" />
                 </intent-filter>
             </receiver>
             
@@ -76,11 +78,11 @@
         </config-file>
         
         <source-file src="xml/accessoryservices.xml" target-dir="res/xml" />
-        <source-file src="libs/accessory-v2.0.19.jar" target-dir="libs" />
+        <source-file src="libs/accessory-v2.3.2.jar" target-dir="libs" />
         <source-file src="libs/sdk-v1.0.0.jar" target-dir="libs" />
-        <source-file src="src/android/GalaxyGearPlugin.java" target-dir="src/net/trentgardner/cordova/galaxygear" />
-        <source-file src="src/android/GearProviderService.java" target-dir="src/net/trentgardner/cordova/galaxygear" />
-        <source-file src="aidl/android/GearMessageApi.aidl" target-dir="src/net/trentgardner/cordova/galaxygear" />
-        <source-file src="aidl/android/GearMessageListener.aidl" target-dir="src/net/trentgardner/cordova/galaxygear" />
+        <source-file src="src/android/GalaxyGearPlugin.java" target-dir="src/com/overmob/cordova/galaxygear" />
+        <source-file src="src/android/ProviderService.java" target-dir="src/com/overmob/cordova/galaxygear" />
+        <source-file src="aidl/android/GearMessageApi.aidl" target-dir="src/com/overmob/cordova/galaxygear" />
+        <source-file src="aidl/android/GearMessageListener.aidl" target-dir="src/com/overmob/cordova/galaxygear" />
     </platform>
 </plugin>

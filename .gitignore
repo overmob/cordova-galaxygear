@@ -31,3 +31,6 @@ proguard/
 *.wgt
 .DS_Store
 
+# Ide
+.idea/
+

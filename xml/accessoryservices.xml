@@ -32,7 +32,7 @@
             id="/system/cordovagearprovider"
             name="cordovagearprovider"
             role="provider"
-            serviceImpl="net.trentgardner.cordova.galaxygear.GearProviderService"
+            serviceImpl="com.overmob.cordova.galaxygear.ProviderService"
             version="1.0"
             serviceLimit="ANY"
 	    	serviceTimeout="10">

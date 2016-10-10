@@ -1,4 +1,4 @@
-package net.trentgardner.cordova.galaxygear;
+package com.overmob.cordova.galaxygear;
 
 interface GearMessageListener {
 	void onConnect(int connectionId);
