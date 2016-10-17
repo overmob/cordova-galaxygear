@@ -259,7 +259,7 @@ public class ProviderService extends SAAgent {
                 for (GearMessageListener listener : listeners) {
                     try {
                         Log.d(TAG, "onReceive channelId: " + mConnectionId);
-                        listener.onDataReceived(mConnectionId, "data send");
+                        listener.onDataReceived(mConnectionId, message);
                     } catch (RemoteException e) {
                         Log.w(TAG, "Failed to notify listener " + listener, e);
                     }
